@@ -39,6 +39,7 @@ public:
     void operator+=(const BigInt &);
     void operator+=(BigInt &);
 
-    long operator%(const long); // TODO: to implement
-    long operator%=(BigInt &);  // TODO: to implement
+    long operator%(long);            // TODO: to implement
+    void operator%=(BigInt &);       // TODO: to implement
+    void operator%=(const BigInt &); // TODO: to implement
 };
