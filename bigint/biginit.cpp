@@ -12,7 +12,7 @@ BigInt::BigInt(long length, const std::vector<bool> &number = null)
     for (; i < number.size(); i++)
         (*this).number.push_back(number[i]);
 
-    for (; i < length - number.size(); i++)
+    for (i = 0; i < length - number.size(); i++)
         (*this).number.push_back(0);
 
     (*this).length = (*this).number.size();
