@@ -15,6 +15,6 @@ The idea is this:
 
 After this, just include the needeed number class using the C++ #include preprocessor directive (for example, bigint): 
 
-    ``` cpp
-    #include "../path/to/dependency/folder/Numerics/bigint/bigint.hpp"
-    ```
+``` cpp
+    1. #include "../path/to/dependency/folder/Numerics/bigint/bigint.hpp"
+```
