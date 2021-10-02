@@ -182,7 +182,7 @@ bool BigInt::operator>(unsigned long number)
         comparisonCopy.flip(highestBigIntBit);
         bitRepresentation[highestLongBit] = 0;
 
-        highestBigIntBit = highestBit<std::vector<bool>>(comparisonCopy.number, (*this).length);
+        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
         highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
     }
 
@@ -205,7 +205,7 @@ bool BigInt::operator<(unsigned long number)
         comparisonCopy.flip(highestBigIntBit);
         bitRepresentation[highestLongBit] = 0;
 
-        highestBigIntBit = highestBit<std::vector<bool>>(comparisonCopy.number, (*this).length);
+        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
         highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
     }
 
@@ -228,7 +228,7 @@ bool BigInt::operator<=(unsigned long number)
         comparisonCopy.flip(highestBigIntBit);
         bitRepresentation[highestLongBit] = 0;
 
-        highestBigIntBit = highestBit<std::vector<bool>>(comparisonCopy.number, (*this).length);
+        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
         highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
     }
 
@@ -251,13 +251,104 @@ bool BigInt::operator>=(unsigned long number)
         comparisonCopy.flip(highestBigIntBit);
         bitRepresentation[highestLongBit] = 0;
 
-        highestBigIntBit = highestBit<std::vector<bool>>(comparisonCopy.number, (*this).length);
+        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
         highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
     }
 
     return highestBigIntBit > highestLongBit;
 };
 
+bool BigInt::operator>=(BigInt &number)
+{
+    if ((*this) == number)
+        return true;
+
+    BigInt comparisonCopy((*this));
+    BigInt anotherCopy((*this));
+
+    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+    unsigned long highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+
+    while (highestBigIntBit == highestLongBit)
+    {
+        comparisonCopy.flip(highestBigIntBit);
+        anotherCopy.flip(highestLongBit);
+
+        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+        highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+    }
+
+    return highestBigIntBit > highestLongBit;
+};
+
+bool BigInt::operator<=(BigInt &number)
+{
+    if ((*this) == number)
+        return true;
+
+    BigInt comparisonCopy((*this));
+    BigInt anotherCopy((*this));
+
+    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+    unsigned long highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+
+    while (highestBigIntBit == highestLongBit)
+    {
+        comparisonCopy.flip(highestBigIntBit);
+        anotherCopy.flip(highestLongBit);
+
+        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+        highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+    }
+
+    return highestBigIntBit < highestLongBit;
+};
+
+bool BigInt::operator<(BigInt &number)
+{
+    if ((*this) == number)
+        return false;
+
+    BigInt comparisonCopy((*this));
+    BigInt anotherCopy((*this));
+
+    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+    unsigned long highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+
+    while (highestBigIntBit == highestLongBit)
+    {
+        comparisonCopy.flip(highestBigIntBit);
+        anotherCopy.flip(highestLongBit);
+
+        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+        highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+    }
+
+    return highestBigIntBit < highestLongBit;
+};
+
+bool BigInt::operator>(BigInt &number)
+{
+    if ((*this) == number)
+        return false;
+
+    BigInt comparisonCopy((*this));
+    BigInt anotherCopy((*this));
+
+    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+    unsigned long highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+
+    while (highestBigIntBit == highestLongBit)
+    {
+        comparisonCopy.flip(highestBigIntBit);
+        anotherCopy.flip(highestLongBit);
+
+        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+        highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+    }
+
+    return highestBigIntBit > highestLongBit;
+};
 
 std::vector<bool> &BigInt::bits()
 {
@@ -267,9 +358,17 @@ std::vector<bool> &BigInt::bits()
 bool BigInt::operator[](unsigned long pos)
 {
     if (pos > (*this).length)
-        throw std::out_of_range("The index passed to the BigInt [] operator is too large! Length of your BigInt: " + std::to_string((*this).length) + ", index passed: " + std::to_string(pos) + ".");
+        throw std::out_of_range("The index passed to the BigInt::operator[] is too large! Length of your BigInt: " + std::to_string((*this).length) + ", index passed: " + std::to_string(pos) + ".");
 
     return (*this).number[pos];
+};
+
+void BigInt::setBit(unsigned long pos, bool val = 0)
+{
+    if (pos > (*this).length)
+        throw std::out_of_range("The index passed to the BigInt::setBit() method is too large! Length of your BigInt: " + std::to_string((*this).length) + ", index passed: " + std::to_string(pos) + ".");
+
+    (*this).number[pos] = val;
 };
 
 template <class Bitset>

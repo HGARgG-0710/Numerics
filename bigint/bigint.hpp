@@ -27,15 +27,15 @@ public:
 
     void flip(unsigned long);
 
-    bool operator<(unsigned long); 
+    bool operator<(unsigned long);
     bool operator>(unsigned long);
-    bool operator>=(unsigned long); 
-    bool operator<=(unsigned long); 
+    bool operator>=(unsigned long);
+    bool operator<=(unsigned long);
 
-    bool operator<(BigInt &);  // TODO: to implement
-    bool operator>(BigInt &);  // TODO: to implement
-    bool operator>=(BigInt &); // TODO: to implement
-    bool operator<=(BigInt &); // TODO: to implement
+    bool operator<(BigInt &);
+    bool operator>(BigInt &);
+    bool operator>=(BigInt &);
+    bool operator<=(BigInt &);
 
     bool operator==(unsigned long);
     bool operator==(BigInt &);
@@ -43,12 +43,13 @@ public:
     void operator+=(const BigInt &);
     void operator+=(BigInt &);
 
-    long operator%(long);            // TODO: to implement
-    void operator%=(BigInt &);       // TODO: to implement
-    void operator%=(const BigInt &); // TODO: to implement
+    unsigned long operator%(unsigned long); // TODO: to implement
+    void operator%=(BigInt &);              // TODO: to implement
+    void operator%=(const BigInt &);        // TODO: to implement
 
     std::vector<bool> &bits();
-    bool operator[](unsigned long); 
+    bool operator[](unsigned long);
+    void setBit(unsigned long, bool);
 };
 
 template <class Bitset>
