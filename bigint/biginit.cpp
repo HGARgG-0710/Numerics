@@ -174,8 +174,8 @@ bool BigInt::operator>(unsigned long number)
     BigInt comparisonCopy((*this));
     std::bitset<64> bitRepresentation(number);
 
-    long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
+    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+    unsigned long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
 
     while (highestBigIntBit == highestLongBit)
     {
@@ -197,8 +197,8 @@ bool BigInt::operator<(unsigned long number)
     BigInt comparisonCopy((*this));
     std::bitset<64> bitRepresentation(number);
 
-    long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
+    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+    unsigned long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
 
     while (highestBigIntBit == highestLongBit)
     {
@@ -220,8 +220,8 @@ bool BigInt::operator<=(unsigned long number)
     BigInt comparisonCopy((*this));
     std::bitset<64> bitRepresentation(number);
 
-    long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
+    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+    unsigned long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
 
     while (highestBigIntBit == highestLongBit)
     {
@@ -243,8 +243,8 @@ bool BigInt::operator>=(unsigned long number)
     BigInt comparisonCopy((*this));
     std::bitset<64> bitRepresentation(number);
 
-    long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
+    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
+    unsigned long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
 
     while (highestBigIntBit == highestLongBit)
     {
@@ -273,9 +273,9 @@ bool BigInt::operator[](unsigned long pos)
 };
 
 template <class Bitset>
-long highestBit(Bitset bitset, long size)
+unsigned long highestBit(Bitset bitset, unsigned long size)
 {
-    long highest = size;
+    unsigned long highest = size;
 
     for (; highest > 0; highest--)
         if (bitset[highest])

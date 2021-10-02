@@ -52,4 +52,4 @@ public:
 };
 
 template <class Bitset>
-long highestBit(Bitset, long);
+unsigned long highestBit(Bitset, unsigned long);
