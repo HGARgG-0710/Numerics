@@ -112,9 +112,12 @@ void BigInt::operator<<=(unsigned long shiftSize)
 
 void BigInt::operator*=(unsigned long factor)
 {
-    const BigInt unit((*this));
+    BigInt newInt((*this).length + static_cast<unsigned long>(log10(factor)) + 1, (*this).number);
+
     for (unsigned long i = 0; i < factor; i++)
-        (*this) += unit;
+        newInt += (*this);
+
+    (*this) = newInt;
 };
 
 void BigInt::operator/=(unsigned long divisor)
@@ -122,7 +125,7 @@ void BigInt::operator/=(unsigned long divisor)
     BigInt copy(*this);
     BigInt result((*this).length);
 
-    for (unsigned long i = 0; i < divisor && copy.number != null && copy >= divisor; i++)
+    while (copy.number != null && copy >= divisor)
     {
         copy -= divisor;
         result++;
@@ -136,7 +139,7 @@ unsigned long BigInt::operator/(unsigned long divisor)
     BigInt copy(*this);
     unsigned long result = 0;
 
-    for (unsigned long i = 0; i < divisor && copy.number != null && copy >= divisor; i++)
+    while (copy.number != null && copy >= divisor)
     {
         copy -= divisor;
         result++;
@@ -161,6 +164,12 @@ void BigInt::operator-=(const BigInt &bigint)
 {
     for (unsigned long i = 0; i < bigint.length; i++)
         (*this) -= bigint.number[i] * (pow(2, i));
+};
+
+void BigInt::operator-=(BigInt &bigint)
+{
+    const BigInt copy(bigint);
+    (*this) -= copy;
 };
 
 bool BigInt::operator==(unsigned long number)
@@ -394,7 +403,7 @@ void BigInt::setBit(unsigned long pos, bool val = 0)
 BigInt BigInt::operator%(unsigned long number)
 {
     BigInt result = (*this) / number;
-    return (*this) - (result * number);
+    return (*this) - result * number;
 };
 
 BigInt BigInt::operator-(unsigned long number)
@@ -410,11 +419,72 @@ BigInt BigInt::operator-(unsigned long number)
 BigInt BigInt::operator+(unsigned long number)
 {
     BigInt copy((*this));
-
-    for (unsigned long i = 0; i < number; i++)
-        copy++;
-
+    copy += number;
     return copy;
+};
+
+BigInt BigInt::operator-(BigInt bigint)
+{
+    BigInt copy((*this));
+    copy -= bigint;
+    return copy;
+};
+
+BigInt BigInt::operator+(BigInt bigint)
+{
+    BigInt copy((*this));
+    copy += bigint;
+    return copy;
+};
+
+BigInt BigInt::operator/(BigInt divisor)
+{
+    BigInt copy(*this);
+    BigInt result((*this).length);
+
+    while (copy.number != null && copy >= divisor)
+    {
+        copy -= divisor;
+        result++;
+    }
+
+    return result;
+};
+
+void BigInt::operator*=(BigInt &factor)
+{
+    const BigInt copy(factor);
+    (*this) *= copy;
+};
+
+void BigInt::operator*=(const BigInt &factor)
+{
+    BigInt newInt((*this).length + factor.length + 1, (*this).number);
+
+    for (BigInt i = 0; i < factor.length; i++)
+        newInt += (*this);
+
+    (*this) = newInt;
+};
+
+BigInt BigInt::operator*(BigInt factor)
+{
+    BigInt newInt((*this).length + factor.length + 1, (*this).number);
+
+    for (unsigned long i = 0; i < factor.length; i++)
+        newInt += (*this);
+
+    return newInt;
+};
+
+BigInt BigInt::operator*(unsigned long factor)
+{
+    BigInt newInt((*this).length + static_cast<unsigned long>(log10(factor)) + 1, (*this).number);
+
+    for (unsigned long i = 0; i < factor; i++)
+        newInt += (*this);
+
+    return newInt;
 };
 
 template <class Bitset>
@@ -427,14 +497,4 @@ unsigned long highestBit(Bitset bitset, unsigned long size)
             break;
 
     return highest;
-};
-
-BigInt BigInt::operator-(BigInt bigint)
-{
-    BigInt copy((*this));
-
-    for (unsigned long i = 0; i < bigint.length; i++)
-        copy -= bigint[i] * pow(2, i);
-
-    return copy;
 };
