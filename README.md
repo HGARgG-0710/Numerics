@@ -25,7 +25,7 @@ A-a-a-and that's it!
 Now the only thing left to do is to compile the whole thing using g++ (or any other compiler of your choice): 
 
 ```bash
-g++ -Wall src/main.cpp path/to/dependency/folder/Numerics/bigint/bigint.cpp
+$ g++ -Wall src/main.cpp path/to/dependency/folder/Numerics/bigint/bigint.cpp
 ```
 
 That is how you work with the Numerics number library in general.
