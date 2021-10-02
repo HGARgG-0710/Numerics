@@ -18,7 +18,6 @@ public:
 
     void operator+=(unsigned long);
     void operator-=(unsigned long);
-
     void operator*=(unsigned long);
     void operator/=(unsigned long);
 
@@ -27,20 +26,15 @@ public:
 
     void flip(unsigned long);
 
-    BigInt operator+(unsigned long); // TODO: to implement
+    BigInt operator+(unsigned long);
     BigInt operator-(unsigned long);
-    BigInt operator*(unsigned long); // TODO: to implement
+    BigInt operator*(unsigned long);
     unsigned long operator/(unsigned long);
 
-    BigInt operator+(BigInt); // TODO: to implement
-    BigInt operator-(BigInt); 
-    BigInt operator*(BigInt); // TODO: to implement
-    BigInt operator/(BigInt); // TODO: to implement
-
-    BigInt operator+(BigInt &); // TODO: to implement
-    BigInt operator-(BigInt &); // TODO: to implement
-    BigInt operator*(BigInt &); // TODO: to implement
-    BigInt operator/(BigInt &); // TODO: to implement
+    BigInt operator+(BigInt);
+    BigInt operator-(BigInt);
+    BigInt operator*(BigInt);
+    BigInt operator/(BigInt);
 
     bool operator<(unsigned long);
     bool operator>(unsigned long);
@@ -56,10 +50,13 @@ public:
     bool operator==(BigInt &);
 
     void operator+=(BigInt &);
-    void operator+=(const BigInt &bigint);
-
-    void BigInt::operator-=(const BigInt &);
-    void BigInt::operator-=(const BigInt &);
+    void operator+=(const BigInt &);
+    void operator-=(BigInt &);
+    void operator-=(const BigInt &);
+    void operator*=(BigInt &);
+    void operator*=(const BigInt &);
+    void operator/=(BigInt &);       // TODO: to implement
+    void operator/=(const BigInt &); // TODO: to implement
 
     BigInt operator%(unsigned long);
     void operator%=(unsigned long);    // TODO: to implement
