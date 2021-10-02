@@ -6,7 +6,7 @@
 
 #include "bigint.hpp"
 
-const std::vector<bool> &null = {0};
+const std::vector<bool> null = {0};
 
 BigInt::BigInt(unsigned long length, const std::vector<bool> &number = null)
 {
@@ -21,7 +21,7 @@ BigInt::BigInt(unsigned long length, const std::vector<bool> &number = null)
     (*this).length = (*this).number.size();
 };
 
-BigInt::BigInt(const BigInt &original)
+BigInt::BigInt(BigInt &original)
 {
     (*this).length = original.length;
 
@@ -48,7 +48,7 @@ void BigInt::operator-=(unsigned long decrease)
 
 BigInt BigInt::operator++(int)
 {
-    const BigInt copy(*this);
+    BigInt copy(*this);
 
     for (unsigned long i = 0; i < (*this).length; i++)
     {
@@ -66,7 +66,7 @@ BigInt BigInt::operator++(int)
 
 BigInt BigInt::operator--(int)
 {
-    const BigInt copy(*this);
+    BigInt copy(*this);
 
     for (unsigned long i = 0; i < (*this).length; i++)
     {
@@ -131,16 +131,36 @@ void BigInt::operator/=(unsigned long divisor)
     (*this) = result;
 };
 
-void BigInt::operator+=(const BigInt &bigint)
+unsigned long BigInt::operator/(unsigned long divisor)
 {
-    for (unsigned long i = 0; i < bigint.length; i++)
-        (*this) += bigint.number[i] * (pow(2, i));
+    BigInt copy(*this);
+    unsigned long result = 0;
+
+    for (unsigned long i = 0; i < divisor && copy.number != null && copy >= divisor; i++)
+    {
+        copy -= divisor;
+        result++;
+    }
+
+    return result;
 };
 
 void BigInt::operator+=(BigInt &bigint)
 {
     const BigInt copy(bigint);
     (*this) += copy;
+};
+
+void BigInt::operator+=(const BigInt &bigint)
+{
+    for (unsigned long i = 0; i < bigint.length; i++)
+        (*this) += bigint.number[i] * (pow(2, i));
+};
+
+void BigInt::operator-=(const BigInt &bigint)
+{
+    for (unsigned long i = 0; i < bigint.length; i++)
+        (*this) -= bigint.number[i] * (pow(2, i));
 };
 
 bool BigInt::operator==(unsigned long number)
@@ -371,6 +391,32 @@ void BigInt::setBit(unsigned long pos, bool val = 0)
     (*this).number[pos] = val;
 };
 
+BigInt BigInt::operator%(unsigned long number)
+{
+    BigInt result = (*this) / number;
+    return (*this) - (result * number);
+};
+
+BigInt BigInt::operator-(unsigned long number)
+{
+    BigInt copy((*this));
+
+    for (unsigned long i = 0; i < number; i++)
+        copy--;
+
+    return copy;
+};
+
+BigInt BigInt::operator+(unsigned long number)
+{
+    BigInt copy((*this));
+
+    for (unsigned long i = 0; i < number; i++)
+        copy++;
+
+    return copy;
+};
+
 template <class Bitset>
 unsigned long highestBit(Bitset bitset, unsigned long size)
 {
@@ -381,4 +427,14 @@ unsigned long highestBit(Bitset bitset, unsigned long size)
             break;
 
     return highest;
+};
+
+BigInt BigInt::operator-(BigInt bigint)
+{
+    BigInt copy((*this));
+
+    for (unsigned long i = 0; i < bigint.length; i++)
+        copy -= bigint[i] * pow(2, i);
+
+    return copy;
 };
