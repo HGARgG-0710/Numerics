@@ -6,8 +6,6 @@
 
 #include "bigint.hpp"
 
-const std::vector<bool> null = {0};
-
 BigInt::BigInt(unsigned long length, const std::vector<bool> &number = null)
 {
     unsigned long i = 0;
