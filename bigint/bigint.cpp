@@ -6,7 +6,7 @@
 
 #include "bigint.hpp"
 
-BigInt::BigInt(unsigned long length, const std::vector<bool> &number = null)
+BigInt::BigInt(unsigned long length, const std::vector<bool> &number)
 {
     unsigned long i = 0;
 

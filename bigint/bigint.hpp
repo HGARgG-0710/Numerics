@@ -9,7 +9,7 @@ private:
     unsigned long length = 0;
 
 public:
-    BigInt(unsigned long, const std::vector<bool> &);
+    BigInt(unsigned long, const std::vector<bool> & = null);
 
     // * copy constructors
     BigInt(BigInt &);
@@ -46,11 +46,6 @@ public:
     bool operator>=(unsigned long);
     bool operator<=(unsigned long);
 
-    // bool operator>=(const BigInt);
-    // bool operator<=(const BigInt);
-    // bool operator>(const BigInt);
-    // bool operator<(const BigInt);
-
     bool operator<(BigInt);
     bool operator>(BigInt);
     bool operator>=(BigInt);
@@ -58,22 +53,15 @@ public:
 
     bool operator==(unsigned long);
     bool operator==(BigInt);
-    // bool operator==(const BigInt);
 
     void operator+=(BigInt);
-    // void operator+=(const BigInt);
     void operator-=(BigInt);
-    // void operator-=(const BigInt);
     void operator*=(BigInt);
-    // void operator*=(const BigInt);
     void operator/=(BigInt);
-    // void operator/=(const BigInt);
 
     BigInt operator%(unsigned long);
     void operator%=(unsigned long);
     void operator%=(BigInt);
-    // void operator%=(const BigInt);
-    // BigInt operator%(const BigInt);
     BigInt operator%(BigInt);
 
     std::vector<bool> &bits();
