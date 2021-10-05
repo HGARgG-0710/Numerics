@@ -21,6 +21,14 @@ BigInt::BigInt(unsigned long length, const std::vector<bool> &number = null)
     (*this).length = (*this).number.size();
 };
 
+BigInt::BigInt(const BigInt &original)
+{
+    (*this).length = original.length;
+
+    for (unsigned long i = 0; i < (*this).length; i++)
+        (*this).number.push_back(original.number[i]);
+};
+
 BigInt::BigInt(BigInt &original)
 {
     (*this).length = original.length;
@@ -148,25 +156,25 @@ unsigned long BigInt::operator/(unsigned long divisor)
     return result;
 };
 
-void BigInt::operator+=(BigInt &bigint)
+void BigInt::operator+=(BigInt bigint)
 {
     const BigInt copy(bigint);
     (*this) += copy;
 };
 
-void BigInt::operator+=(const BigInt &bigint)
+void BigInt::operator+=(const BigInt bigint)
 {
     for (unsigned long i = 0; i < bigint.length; i++)
         (*this) += bigint.number[i] * (pow(2, i));
 };
 
-void BigInt::operator-=(const BigInt &bigint)
+void BigInt::operator-=(const BigInt bigint)
 {
     for (unsigned long i = 0; i < bigint.length; i++)
         (*this) -= bigint.number[i] * (pow(2, i));
 };
 
-void BigInt::operator-=(BigInt &bigint)
+void BigInt::operator-=(BigInt bigint)
 {
     const BigInt copy(bigint);
     (*this) -= copy;
@@ -183,7 +191,13 @@ bool BigInt::operator==(unsigned long number)
     return true;
 };
 
-bool BigInt::operator==(BigInt &bigint)
+bool BigInt::operator==(BigInt bigint)
+{
+    const BigInt copy(bigint);
+    return (*this) == copy;
+};
+
+bool BigInt::operator==(const BigInt bigint)
 {
     if ((*this).length != bigint.length)
         return false;
@@ -287,7 +301,7 @@ bool BigInt::operator>=(unsigned long number)
     return highestBigIntBit > highestLongBit;
 };
 
-bool BigInt::operator>=(BigInt &number)
+bool BigInt::operator>=(const BigInt number)
 {
     if ((*this) == number)
         return true;
@@ -310,7 +324,31 @@ bool BigInt::operator>=(BigInt &number)
     return highestBigIntBit > highestLongBit;
 };
 
-bool BigInt::operator<=(BigInt &number)
+bool BigInt::operator>=(BigInt number)
+{
+    const BigInt copy(number);
+    return (*this) >= copy;
+};
+
+bool BigInt::operator<=(BigInt number)
+{
+    const BigInt copy(number);
+    return (*this) <= copy;
+};
+
+bool BigInt::operator>(BigInt number)
+{
+    const BigInt copy(number);
+    return (*this) > copy;
+};
+
+bool BigInt::operator<(BigInt number)
+{
+    const BigInt copy(number);
+    return (*this) < copy;
+};
+
+bool BigInt::operator<=(const BigInt number)
 {
     if ((*this) == number)
         return true;
@@ -333,7 +371,7 @@ bool BigInt::operator<=(BigInt &number)
     return highestBigIntBit < highestLongBit;
 };
 
-bool BigInt::operator<(BigInt &number)
+bool BigInt::operator<(const BigInt number)
 {
     if ((*this) == number)
         return false;
@@ -356,7 +394,7 @@ bool BigInt::operator<(BigInt &number)
     return highestBigIntBit < highestLongBit;
 };
 
-bool BigInt::operator>(BigInt &number)
+bool BigInt::operator>(const BigInt number)
 {
     if ((*this) == number)
         return false;
@@ -451,13 +489,13 @@ BigInt BigInt::operator/(BigInt divisor)
     return result;
 };
 
-void BigInt::operator*=(BigInt &factor)
+void BigInt::operator*=(BigInt factor)
 {
     const BigInt copy(factor);
     (*this) *= copy;
 };
 
-void BigInt::operator*=(const BigInt &factor)
+void BigInt::operator*=(const BigInt factor)
 {
     BigInt newInt((*this).length + factor.length + 1, (*this).number);
 
@@ -485,6 +523,55 @@ BigInt BigInt::operator*(unsigned long factor)
         newInt += (*this);
 
     return newInt;
+};
+
+void BigInt::operator/=(const BigInt divisor)
+{
+    BigInt copy(*this);
+    BigInt result((*this).length);
+
+    while (copy.number != null && copy >= divisor)
+    {
+        copy -= divisor;
+        result++;
+    }
+
+    (*this) = result;
+};
+
+void BigInt::operator/=(BigInt bigint)
+{
+    const BigInt copy(bigint);
+    (*this) /= copy;
+};
+
+unsigned long BigInt::size()
+{
+    return (*this).length;
+};
+
+void BigInt::operator%=(unsigned long divisor)
+{
+    BigInt divided = (*this) / divisor;
+    (*this) -= divided * divisor;
+};
+
+BigInt BigInt::operator%(const BigInt bigint)
+{
+    BigInt divided = (*this) / bigint;
+    return (*this) - divided * bigint;
+};
+
+void BigInt::operator%=(BigInt divisor)
+{
+    const BigInt copy(divisor);
+    (*this) %= copy;
+};
+
+void BigInt::operator%=(const BigInt divisor)
+{
+    BigInt divided = (*this) / divisor;
+    (*this) -= divided * divisor;
 };
 
 template <class Bitset>
