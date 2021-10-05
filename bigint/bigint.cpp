@@ -168,7 +168,7 @@ void BigInt::operator-=(BigInt bigint)
 
 bool BigInt::operator==(unsigned long number)
 {
-    std::bitset<ULONG_MAX> bits;
+    std::bitset<ULONG_MAX> bits(number);
 
     for (unsigned long i = 0; i < (*this).length; i++)
         if (bits[i] != (*this).number[i])
@@ -443,6 +443,11 @@ BigInt BigInt::operator/(BigInt divisor)
     }
 
     return result;
+};
+
+bool BigInt::operator!=(BigInt bigint)
+{
+    return !((*this) == bigint);
 };
 
 void BigInt::operator*=(BigInt factor)

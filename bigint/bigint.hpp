@@ -53,6 +53,7 @@ public:
 
     bool operator==(unsigned long);
     bool operator==(BigInt);
+    bool operator!=(BigInt bigint);
 
     void operator+=(BigInt);
     void operator-=(BigInt);
