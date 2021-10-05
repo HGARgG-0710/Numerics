@@ -9,11 +9,11 @@ private:
     unsigned long length = 0;
 
 public:
-    BigInt(unsigned long, const std::vector<bool> & = null);
+    BigInt(unsigned long, const std::vector<bool> &);
 
     // * copy constructors
     BigInt(BigInt &);
-    BigInt::BigInt(const BigInt &original);
+    BigInt(const BigInt &);
 
     BigInt operator++(int);
     BigInt operator--(int);
@@ -46,10 +46,10 @@ public:
     bool operator>=(unsigned long);
     bool operator<=(unsigned long);
 
-    bool operator>=(const BigInt);
-    bool operator<=(const BigInt);
-    bool operator>(const BigInt);
-    bool operator<(const BigInt);
+    // bool operator>=(const BigInt);
+    // bool operator<=(const BigInt);
+    // bool operator>(const BigInt);
+    // bool operator<(const BigInt);
 
     bool operator<(BigInt);
     bool operator>(BigInt);
@@ -58,22 +58,22 @@ public:
 
     bool operator==(unsigned long);
     bool operator==(BigInt);
-    bool operator==(const BigInt);
+    // bool operator==(const BigInt);
 
     void operator+=(BigInt);
-    void operator+=(const BigInt);
+    // void operator+=(const BigInt);
     void operator-=(BigInt);
-    void operator-=(const BigInt);
+    // void operator-=(const BigInt);
     void operator*=(BigInt);
-    void operator*=(const BigInt);
+    // void operator*=(const BigInt);
     void operator/=(BigInt);
-    void operator/=(const BigInt);
+    // void operator/=(const BigInt);
 
     BigInt operator%(unsigned long);
     void operator%=(unsigned long);
     void operator%=(BigInt);
-    void operator%=(const BigInt);
-    BigInt operator%(const BigInt);
+    // void operator%=(const BigInt);
+    // BigInt operator%(const BigInt);
     BigInt operator%(BigInt);
 
     std::vector<bool> &bits();
