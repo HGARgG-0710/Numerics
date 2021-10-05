@@ -413,7 +413,10 @@ BigInt BigInt::operator-(unsigned long number)
 BigInt BigInt::operator+(unsigned long number)
 {
     BigInt copy((*this));
-    copy += number;
+
+    for (unsigned long i = 0; i < number; i++)
+        copy++;
+
     return copy;
 };
 
