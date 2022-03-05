@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <stdexcept>
-#include <math.h>
+#include <cmath>
 #include <bitset>
 #include <string>
 
@@ -331,23 +331,7 @@ bool BigInt::operator<(BigInt number)
 {
     if ((*this) == number)
         return false;
-
-    BigInt comparisonCopy((*this));
-    BigInt anotherCopy((*this));
-
-    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    unsigned long highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
-
-    while (highestBigIntBit == highestLongBit)
-    {
-        comparisonCopy.flip(highestBigIntBit);
-        anotherCopy.flip(highestLongBit);
-
-        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-        highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
-    }
-
-    return highestBigIntBit < highestLongBit;
+    return !((*this) > number);
 };
 
 bool BigInt::operator>(BigInt number)
@@ -373,7 +357,7 @@ bool BigInt::operator>(BigInt number)
     return highestBigIntBit > highestLongBit;
 };
 
-std::vector<bool> &BigInt::bits()
+std::vector<bool> BigInt::bits()
 {
     return (*this).number;
 };
@@ -465,10 +449,10 @@ void BigInt::operator*=(BigInt factor)
 
 BigInt BigInt::operator*(BigInt factor)
 {
-    BigInt newInt((*this).length + factor.length + 1, (*this).number);
+    BigInt newInt((*this).length + factor.length + 1, {0});
 
     for (unsigned long i = 0; i < factor.length; i++)
-        newInt += (*this);
+        newInt += factor.bits()[i] ? (*this) * std::pow(2, i) : 0;
 
     return newInt;
 };
@@ -511,7 +495,7 @@ void BigInt::operator%=(unsigned long divisor)
 BigInt BigInt::operator%(BigInt bigint)
 {
     BigInt divided = (*this) / bigint;
-    return (*this) - divided * bigint;
+    return (*this) - (divided * bigint);
 };
 
 void BigInt::operator%=(BigInt divisor)
