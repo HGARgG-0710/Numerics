@@ -32,7 +32,8 @@ That is how you work with the Numerics number library in general.
 In order to get to see what is available in it, you'll have to visit the header files (.hpp) for the certain subprojects.  
 They are usually not big and are quite good at describing the capabilities of different classes and functions. 
 
-If you want to contribute or are just curious - go to the source code, it is also quite simple and obvious. 
+If you want to contribute or are just curious - go to the source code, it is also quite simple. 
+More or less good documentation (or comments to things, at least) are in plans.  
 
 ## Test 
 
