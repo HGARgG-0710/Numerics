@@ -515,3 +515,5 @@ unsigned long highestBit(Bitset bitset, unsigned long size)
 
     return highest;
 };
+
+// TODO: Implement the one part of BigInt representing negative integers. 
