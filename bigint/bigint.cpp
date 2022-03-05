@@ -29,7 +29,7 @@ BigInt::BigInt(const BigInt &original)
 
 BigInt::BigInt(BigInt &original)
 {
-    (*this).length = original.length;
+    (*this).length = original.size();
 
     for (unsigned long i = 0; i < (*this).length; i++)
         (*this).number.push_back(original.bits()[i]);
@@ -195,7 +195,7 @@ bool BigInt::operator==(unsigned long number)
 
 bool BigInt::operator==(BigInt bigint)
 {
-    if ((*this).length != bigint.length)
+    if ((*this).length != bigint.size())
         return false;
 
     for (unsigned long i = 0; i < (*this).length; i++)
@@ -299,48 +299,12 @@ bool BigInt::operator>=(unsigned long number)
 
 bool BigInt::operator>=(BigInt number)
 {
-    if ((*this) == number)
-        return true;
-
-    BigInt comparisonCopy((*this));
-    BigInt anotherCopy((*this));
-
-    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    unsigned long highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
-
-    while (highestBigIntBit == highestLongBit)
-    {
-        comparisonCopy.flip(highestBigIntBit);
-        anotherCopy.flip(highestLongBit);
-
-        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-        highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
-    }
-
-    return highestBigIntBit > highestLongBit;
+    return !((*this) < number); 
 };
 
 bool BigInt::operator<=(BigInt number)
 {
-    if ((*this) == number)
-        return true;
-
-    BigInt comparisonCopy((*this));
-    BigInt anotherCopy((*this));
-
-    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    unsigned long highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
-
-    while (highestBigIntBit == highestLongBit)
-    {
-        comparisonCopy.flip(highestBigIntBit);
-        anotherCopy.flip(highestLongBit);
-
-        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-        highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
-    }
-
-    return highestBigIntBit < highestLongBit;
+    return !((*this) > number); 
 };
 
 bool BigInt::operator<(BigInt number)
@@ -455,9 +419,9 @@ bool BigInt::operator!=(BigInt bigint)
 
 void BigInt::operator*=(BigInt factor)
 {
-    BigInt newInt((*this).length + factor.length + 1, (*this).number);
+    BigInt newInt((*this).length + factor.size() + 1, (*this).number);
 
-    for (BigInt i = 0; i < factor.length; i++)
+    for (BigInt i = 0; i < factor.size(); i++)
         newInt += (*this);
 
     (*this) = newInt;
@@ -465,7 +429,7 @@ void BigInt::operator*=(BigInt factor)
 
 BigInt BigInt::operator*(BigInt factor)
 {
-    BigInt newInt((*this).length + factor.length + 1, {0});
+    BigInt newInt((*this).length + factor.size() + 1, {0});
 
     for (unsigned long i = 0; i < factor.length; i++)
         newInt += factor.bits()[i] ? (*this) * std::pow(2, i) : 0;
