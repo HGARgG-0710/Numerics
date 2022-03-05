@@ -32,7 +32,7 @@ BigInt::BigInt(BigInt &original)
     (*this).length = original.length;
 
     for (unsigned long i = 0; i < (*this).length; i++)
-        (*this).number.push_back(original.number[i]);
+        (*this).number.push_back(original.bits()[i]);
 };
 
 void BigInt::flip(unsigned long pos)
@@ -131,7 +131,7 @@ void BigInt::operator/=(unsigned long divisor)
     BigInt copy(*this);
     BigInt result((*this).length);
 
-    while (copy.number != null && copy >= divisor)
+    while (copy.bits() != null && copy >= divisor)
     {
         copy -= divisor;
         result++;
@@ -364,7 +364,7 @@ std::vector<bool> BigInt::bits()
 
 bool BigInt::operator[](unsigned long pos)
 {
-    if (pos > (*this).length)
+    if (pos >= (*this).length)
         throw std::out_of_range("The index passed to the BigInt::operator[] is too large! Length of your BigInt: " + std::to_string((*this).length) + ", index passed: " + std::to_string(pos) + ".");
 
     return (*this).number[pos];
@@ -507,7 +507,7 @@ void BigInt::operator%=(BigInt divisor)
 template <class Bitset>
 unsigned long highestBit(Bitset bitset, unsigned long size)
 {
-    unsigned long highest = size;
+    unsigned long highest = size - 1;
 
     for (; highest > 0; highest--)
         if (bitset[highest])
