@@ -39,10 +39,10 @@ More or less good documentation (or comments to things, at least) are in plans.
 
 You are also able to test the parts of the library provided: 
 
-```bash
-$ cd numerics/bigint/bigint
-$ make test && cd bin
-$ test
+```batch
+    cd numerics/bigint/bigint
+    mkdir bin
+    make test && cd bin && test
 ```
 
 Tests are supported for Windows only (for now at least). 
