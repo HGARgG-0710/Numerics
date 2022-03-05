@@ -6,7 +6,7 @@
 
 #include "bigint.hpp"
 
-BigInt::BigInt(unsigned long length, const std::vector<bool> &number)
+BigInt::BigInt(unsigned long length, const std::vector<bool> number)
 {
     unsigned long i = 0;
 
@@ -85,6 +85,22 @@ BigInt BigInt::operator--(int)
         (*this).number[i] = 1;
     }
 
+    return copy;
+};
+
+BigInt BigInt::operator++()
+{
+    BigInt copy(*this);
+    (*this)++;
+    copy++;
+    return copy;
+};
+
+BigInt BigInt::operator--()
+{
+    BigInt copy(*this);
+    (*this)--;
+    copy--;
     return copy;
 };
 
@@ -516,4 +532,4 @@ unsigned long highestBit(Bitset bitset, unsigned long size)
     return highest;
 };
 
-// TODO: Implement the one part of BigInt representing negative integers. 
+// TODO: Implement the one part of BigInt representing negative integers.

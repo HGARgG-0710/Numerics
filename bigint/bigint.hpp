@@ -9,7 +9,7 @@ private:
     unsigned long length = 0;
 
 public:
-    BigInt(unsigned long, const std::vector<bool> & = null);
+    BigInt(unsigned long, const std::vector<bool> = null);
 
     // * copy constructors
     BigInt(BigInt &);
@@ -18,8 +18,8 @@ public:
     BigInt operator++(int);
     BigInt operator--(int);
 
-    BigInt *operator++();
-    BigInt *operator--();
+    BigInt operator++();
+    BigInt operator--();
 
     void operator+=(unsigned long);
     void operator-=(unsigned long);
