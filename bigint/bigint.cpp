@@ -3,6 +3,7 @@
 #include <cmath>
 #include <bitset>
 #include <string>
+#include <iostream>
 
 #include "bigint.hpp"
 
@@ -172,8 +173,8 @@ unsigned long BigInt::operator/(unsigned long divisor)
 
 void BigInt::operator+=(BigInt bigint)
 {
-    for (unsigned long i = 0; i < bigint.length; i++)
-        (*this) += bigint.number[i] * (pow(2, i));
+    for (unsigned long i = 0; i < bigint.size(); i++)
+        (*this) += bigint[i] * (pow(2, i));
 };
 
 void BigInt::operator-=(BigInt bigint)
@@ -483,6 +484,13 @@ void BigInt::operator%=(BigInt divisor)
     BigInt divided = (*this) / divisor;
     (*this) -= divided * divisor;
 };
+
+void BigInt::output(std::string to_add) {
+    for (unsigned long i = (*this).length - 1; i > 0; i--) 
+        std::cout << (*this)[i]; 
+
+    std::cout << (*this)[0] << to_add;  
+} 
 
 template <class Bitset>
 unsigned long highestBit(Bitset bitset, unsigned long size)

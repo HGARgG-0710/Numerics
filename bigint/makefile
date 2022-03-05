@@ -1,2 +1,2 @@
 test: bigint.cpp
-	g++ bigint.cpp -o bin/test.exe
+	g++ -Wall test.cpp bigint.cpp -o bin/test.exe

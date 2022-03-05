@@ -25,7 +25,7 @@ A-a-a-and that's it!
 Now the only thing left to do is to compile the whole thing using g++ (or any other compiler of your choice): 
 
 ```bash
-$ g++ -Wall src/main.cpp path/to/dependency/folder/Numerics/bigint/bigint.cpp
+$ g++ -Wall src/main.cpp path/to/dependency/folder/Numerics/bigint/bigint.cpp -o outputfilename.ext
 ```
 
 That is how you work with the Numerics number library in general.
@@ -33,3 +33,15 @@ In order to get to see what is available in it, you'll have to visit the header 
 They are usually not big and are quite good at describing the capabilities of different classes and functions. 
 
 If you want to contribute or are just curious - go to the source code, it is also quite simple and obvious. 
+
+## Test 
+
+You are also able to test the parts of the library provided: 
+
+```bash
+$ cd numerics/bigint/bigint
+$ make test && cd bin
+$ test
+```
+
+Tests are supported for Windows only (for now at least). 

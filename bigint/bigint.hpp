@@ -66,6 +66,7 @@ public:
     BigInt operator%(BigInt);
 
     std::vector<bool> bits();
+    void output(std::string = ""); 
     bool operator[](unsigned long);
     void setBit(unsigned long, bool);
     unsigned long size();
