@@ -430,17 +430,18 @@ void BigInt::operator*=(BigInt factor)
 
 BigInt BigInt::operator*(BigInt factor)
 {
-    BigInt newInt((*this).length + factor.size() + 1, {0});
+    BigInt newInt((*this).length + factor.size() + 1);
 
     for (unsigned long i = 0; i < factor.length; i++)
-        newInt += factor.bits()[i] ? (*this) * std::pow(2, i) : 0;
+        if (factor.bits()[i])
+            newInt += (*this) * std::pow(2, i);
 
     return newInt;
 };
 
 BigInt BigInt::operator*(unsigned long factor)
 {
-    BigInt newInt((*this).length + static_cast<unsigned long>(log10(factor)) + 1, (*this).number);
+    BigInt newInt((*this).length + static_cast<unsigned long>(log10(factor)) + 1);
 
     for (unsigned long i = 0; i < factor; i++)
         newInt += (*this);
