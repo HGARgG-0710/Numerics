@@ -300,12 +300,12 @@ bool BigInt::operator>=(unsigned long number)
 
 bool BigInt::operator>=(BigInt number)
 {
-    return !((*this) < number); 
+    return !((*this) < number);
 };
 
 bool BigInt::operator<=(BigInt number)
 {
-    return !((*this) > number); 
+    return !((*this) > number);
 };
 
 bool BigInt::operator<(BigInt number)
@@ -320,22 +320,22 @@ bool BigInt::operator>(BigInt number)
     if ((*this) == number)
         return false;
 
-    BigInt comparisonCopy((*this));
-    BigInt anotherCopy((*this));
+    BigInt thisCopy((*this));
+    BigInt numberCopy(number);
 
-    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    unsigned long highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+    unsigned long thisHighestBit = highestBit<BigInt>(thisCopy, thisCopy.size());
+    unsigned long otherHighestBit = highestBit<BigInt>(numberCopy, numberCopy.size());
 
-    while (highestBigIntBit == highestLongBit)
+    while (thisHighestBit == otherHighestBit && thisHighestBit != 0)
     {
-        comparisonCopy.flip(highestBigIntBit);
-        anotherCopy.flip(highestLongBit);
+        thisCopy.flip(thisHighestBit);
+        numberCopy.flip(otherHighestBit);
 
-        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-        highestLongBit = highestBit<BigInt>(anotherCopy, anotherCopy.length);
+        thisHighestBit = highestBit<BigInt>(thisCopy, thisCopy.size());
+        otherHighestBit = highestBit<BigInt>(numberCopy, numberCopy.size());
     }
 
-    return highestBigIntBit > highestLongBit;
+    return thisHighestBit > otherHighestBit;
 };
 
 std::vector<bool> BigInt::bits()
@@ -402,9 +402,9 @@ BigInt BigInt::operator+(BigInt bigint)
 BigInt BigInt::operator/(BigInt divisor)
 {
     BigInt copy(*this);
-    BigInt result((*this).length);
+    BigInt result((*this).length, zeros((*this).length));
 
-    while (copy.number != null && copy >= divisor)
+    while (copy.bits() != null && copy >= divisor)
     {
         copy -= divisor;
         result++;
@@ -485,12 +485,13 @@ void BigInt::operator%=(BigInt divisor)
     (*this) -= divided * divisor;
 };
 
-void BigInt::output(std::string to_add) {
-    for (unsigned long i = (*this).length - 1; i > 0; i--) 
-        std::cout << (*this)[i]; 
+void BigInt::output(std::string to_add)
+{
+    for (unsigned long i = (*this).length - 1; i > 0; i--)
+        std::cout << (*this)[i];
 
-    std::cout << (*this)[0] << to_add;  
-} 
+    std::cout << (*this)[0] << to_add;
+}
 
 template <class Bitset>
 unsigned long highestBit(Bitset bitset, unsigned long size)
@@ -503,5 +504,13 @@ unsigned long highestBit(Bitset bitset, unsigned long size)
 
     return highest;
 };
+
+std::vector<bool> zeros(unsigned long size)
+{
+    std::vector<bool> z = {};
+    for (unsigned long i = 0; i < size; i++)
+        z.push_back(0);
+    return z;
+}
 
 // TODO: Implement the one part of BigInt representing negative integers.

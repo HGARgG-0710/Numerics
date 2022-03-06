@@ -74,3 +74,5 @@ public:
 
 template <class Bitset>
 unsigned long highestBit(Bitset, unsigned long);
+
+std::vector<bool> zeros(unsigned long); 
