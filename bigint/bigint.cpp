@@ -217,7 +217,7 @@ bool BigInt::operator>(unsigned long number)
     unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
     unsigned long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
 
-    while (highestBigIntBit == highestLongBit)
+    while (highestBigIntBit == highestLongBit && highestBigIntBit != 0)
     {
         comparisonCopy.flip(highestBigIntBit);
         bitRepresentation[highestLongBit] = 0;
@@ -225,6 +225,9 @@ bool BigInt::operator>(unsigned long number)
         highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
         highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
     }
+
+    if (highestBigIntBit == 0 && highestLongBit == 0) 
+        return comparisonCopy[0] > bitRepresentation[0];  
 
     return highestBigIntBit > highestLongBit;
 };
@@ -233,23 +236,7 @@ bool BigInt::operator<(unsigned long number)
 {
     if ((*this) == number)
         return false;
-
-    BigInt comparisonCopy((*this));
-    std::bitset<64> bitRepresentation(number);
-
-    unsigned long highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-    unsigned long highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
-
-    while (highestBigIntBit == highestLongBit)
-    {
-        comparisonCopy.flip(highestBigIntBit);
-        bitRepresentation[highestLongBit] = 0;
-
-        highestBigIntBit = highestBit<BigInt>(comparisonCopy, comparisonCopy.length);
-        highestLongBit = highestBit<std::bitset<64>>(bitRepresentation, bitRepresentation.size());
-    }
-
-    return highestBigIntBit < highestLongBit;
+    return !((*this) > number); 
 };
 
 bool BigInt::operator<=(unsigned long number)
@@ -335,6 +322,9 @@ bool BigInt::operator>(BigInt number)
         otherHighestBit = highestBit<BigInt>(numberCopy, numberCopy.size());
     }
 
+    if (thisHighestBit == 0 && otherHighestBit == 0 ) 
+        return thisCopy[0] > numberCopy[0];  
+    
     return thisHighestBit > otherHighestBit;
 };
 
